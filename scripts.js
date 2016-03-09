@@ -20,6 +20,32 @@ var playerOneMarkings = [];
 var playerTwoMarkings = [];
 var whosTurn = 1;
 var gameHeader = document.getElementById('game-header')
+var computer;
+var playerMode;
+
+function onePlayer(){
+	computer = true;
+	playerMode = 1;
+	document.getElementById('game-header').innerHTML = 'Your turn!';
+
+	var buttons = document.getElementsByTagName("button");
+	for(i=0; i<buttons.length; i++){
+		buttons[i].disabled = false;
+		buttons[i].style.pointerEvents = 'auto';
+	}
+}
+
+function twoPlayers(){
+	computer = false;
+	playerMode = 2;
+	document.getElementById('game-header').innerHTML = 'Player 1\'s turn!';
+	var buttons = document.getElementsByTagName("button");
+	for(i=0; i<buttons.length; i++){
+		buttons[i].disabled = false;
+		buttons[i].style.pointerEvents = 'auto';
+	}
+}
+
 
 function addSymbol(element){
 	if(element.innerHTML == ''){
@@ -35,19 +61,22 @@ function addSymbol(element){
 			element.classList.add('p1');
 			playerOneMarkings.push(element.id);
 			checkWin();
-
 			//Only run computersTurn, if the user chose 1 player
-			//Otherwise run computers turn.
-			computersTurn();
-		// }else{
-		// 	//It has to be O's turn. Put an O in.
-		// 	element.innerHTML = 'O';
-		// 	whosTurn = 1;
-		// 	gameHeader.innerHTML = "It is Player 1's turn";
-		// 	gameHeader.className = 'player-one';
-		// 	element.classList.remove('empty');
-		// 	element.classList.add('p2');
-		// 	playerTwoMarkings.push(element.id);
+			if(computer == true){
+				// setTimeout(computersTurn, 3000);
+				computersTurn();
+			}
+		}else{
+		//Otherwise run players turn.
+			//It has to be O's turn. Put an O in.
+			element.innerHTML = 'O';
+			whosTurn = 1;
+			gameHeader.innerHTML = "It is Player 1's turn";
+			gameHeader.className = 'player-one';
+			element.classList.remove('empty');
+			element.classList.add('p2');
+			playerTwoMarkings.push(element.id);
+			checkWin();
 		}
 	}else{
 		gameHeader.innerHTML = "This box is taken";

@@ -19,6 +19,21 @@
 	margin-bottom: 0px;
 }
 
+.num-players{
+	margin: 20px auto;
+	width: 60%;
+	text-align: center;
+}
+
+.num-players button{
+	width: 120px;
+	padding: 0px 5px;
+	background-color: #ddd;
+	font-size: 18px;
+	border-radius: 10px;
+	color: black;
+}
+
 
 .square{
 	display: inline-block;
