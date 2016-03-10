@@ -22,6 +22,8 @@ var whosTurn = 1;
 var gameHeader = document.getElementById('game-header')
 var computer;
 var playerMode;
+var winsPlayerOne;
+var winsPlayerTwo;
 
 function onePlayer(){
 	computer = true;
@@ -31,7 +33,6 @@ function onePlayer(){
 	var buttons = document.getElementsByTagName("button");
 	for(i=0; i<buttons.length; i++){
 		buttons[i].disabled = false;
-		buttons[i].style.pointerEvents = 'auto';
 	}
 }
 
@@ -42,7 +43,6 @@ function twoPlayers(){
 	var buttons = document.getElementsByTagName("button");
 	for(i=0; i<buttons.length; i++){
 		buttons[i].disabled = false;
-		buttons[i].style.pointerEvents = 'auto';
 	}
 }
 
@@ -144,18 +144,36 @@ function gameOver(combo, playerWhoWon){
 	var buttons = document.getElementsByTagName("button");
 	for(i=0; i<buttons.length; i++){
 		buttons[i].disabled = true;
-
-		buttons[i].style.pointerEvents = 'none';
 	}
 	//Give the user a button to click on, to reset the board. When they click on it
-	//Call resetGame()
+
+	// Update wins counter for the winning playerOneMarkings
+	if(playerWhoWon==1){
+		winsPlayerOne++;
+	}else{
+		winsPlayerTwo++;
+	}
+	document.getElementById('play-again-button').disabled = false;
+	document.getElementById('play-again').style.display = 'block';
 }
 
 function resetGame(){
 	// Clear Player Arrays
+	playerOneMarkings = [];
+	playerTwoMarkings = [];
+	
+	var buttons = document.getElementsByClassName("square");
 	// Clear innerHTML of squares
-	// Update wins counter for the winning playerOneMarkings
-	// Undisable the buttons
+	for(i=0; i<buttons.length; i++){
+		buttons[i].innerHTML = '' ;
+		buttons[i].classList.add('empty');
+		buttons[i].classList.remove('winner');
+	}
+	//Enable the one and two player buttons
+	document.getElementById('one-player').disabled = false;
+	document.getElementById('two-players').disabled = false;	
+	//hide the play again button
+	document.getElementById('play-again').style.display = 'none';
 }
 
 var squareWidth = document.getElementById('a1').clientWidth;

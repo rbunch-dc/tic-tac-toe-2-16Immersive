@@ -25,13 +25,22 @@
 	text-align: center;
 }
 
-.num-players button{
+#play-again{
+	display: none;
+	text-align: center;
+}
+
+.num-players button, #play-again button{
 	width: 120px;
 	padding: 0px 5px;
 	background-color: #ddd;
 	font-size: 18px;
 	border-radius: 10px;
 	color: black;
+}
+
+#play-again button{
+	width: 200px;
 }
 
 
