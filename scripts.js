@@ -16,10 +16,20 @@ var winners =
 	['a1','b2','c3'],
 	['c1','b2','a3']
 ];
+
+// var winners = [];
+// var gridSize = 5;
+// for(i = 0; i< gridSize; i++){
+// 	for(j = 0; j< gridSize; j++){
+// 		winners[i].push('a' + j)
+// 	}
+// }
+
+
 var playerOneMarkings = [];
 var playerTwoMarkings = [];
 var whosTurn = 1;
-var gameHeader = document.getElementById('game-header')
+var gameHeader = $('#game-header');
 var computer;
 var playerMode;
 var winsPlayerOne;
@@ -28,9 +38,9 @@ var winsPlayerTwo;
 function onePlayer(){
 	computer = true;
 	playerMode = 1;
-	document.getElementById('game-header').innerHTML = 'Your turn!';
+	$('#game-header').html('Your turn!');
 
-	var buttons = document.getElementsByTagName("button");
+	var buttons = $("button");
 	for(i=0; i<buttons.length; i++){
 		buttons[i].disabled = false;
 	}
@@ -39,27 +49,32 @@ function onePlayer(){
 function twoPlayers(){
 	computer = false;
 	playerMode = 2;
-	document.getElementById('game-header').innerHTML = 'Player 1\'s turn!';
-	var buttons = document.getElementsByTagName("button");
+	$('game-header').html('Player 1\'s turn!');
+	var buttons = $("button");
 	for(i=0; i<buttons.length; i++){
 		buttons[i].disabled = false;
 	}
 }
 
+$('.square').click(function(){
+	addSymbol($(this));
+})
 
 function addSymbol(element){
-	if(element.innerHTML == ''){
+	// $(element).html('X');
+	if($(element).html() == ''){
 		//Put a symbol in... X or O?
 		if(whosTurn == 1){
 			//It's X's turn. So, we have an empty square, and it's X's turn. Put an X in.
-			element.innerHTML = 'X';
+			$(element).html('X');
 			whosTurn = 2;
-			gameHeader.innerHTML = "It is Player 2's turn";
+			$(gameHeader).html("It is Player 2's turn");
 			gameHeader.className = 'player-two';
 			//Get rid of class 'empty', and add who took the square
-			element.classList.remove('empty');
-			element.classList.add('p1');
-			playerOneMarkings.push(element.id);
+			$(element).removeClass('empty');
+			$(element).addClass('p1');
+			playerOneMarkings.push($(element).attr('id'));
+			console.log(playerOneMarkings);
 			checkWin();
 			//Only run computersTurn, if the user chose 1 player
 			if(computer == true){
@@ -69,18 +84,16 @@ function addSymbol(element){
 		}else{
 		//Otherwise run players turn.
 			//It has to be O's turn. Put an O in.
-			element.innerHTML = 'O';
+			$(element).html('O');
 			whosTurn = 1;
-			gameHeader.innerHTML = "It is Player 1's turn";
-			gameHeader.className = 'player-one';
-			element.classList.remove('empty');
-			element.classList.add('p2');
+			$(gameHeader).html("It is Player 1's turn");
+			$(gameHeader).addClass = 'player-one';
 			playerTwoMarkings.push(element.id);
 			checkWin();
 		}
 	}else{
-		gameHeader.innerHTML = "This box is taken";
-		gameHeader.className = 'red';
+		$(gameHeader).html("This box is taken");
+		$(gameHeader).addClass = 'red';
 	}
 	checkWin();
 }
@@ -137,14 +150,21 @@ function checkWin(){
 function gameOver(combo, playerWhoWon){
 	for(i=0; i<combo.length; i++){
 		// console.log(combo[i]);
+		// document.getElementById(combo[i]).classList.remove('blink');
 		document.getElementById(combo[i]).classList.add('winner');
 	}
-	gameHeader.innerHTML = 'Player ' + playerWhoWon + ' , won the game!';
+	for(i=0; i<combo.length; i++){
+		// console.log(combo[i]);
+		// document.getElementById(combo[i]).classList.add('blink');
+	}
+
+	$(gameHeader).html('Player ' + playerWhoWon + ' , won the game!');
 
 	var buttons = document.getElementsByTagName("button");
 	for(i=0; i<buttons.length; i++){
 		buttons[i].disabled = true;
 	}
+	$('#play-again-button').removeAttr('disabled');
 	//Give the user a button to click on, to reset the board. When they click on it
 
 	// Update wins counter for the winning playerOneMarkings
@@ -153,8 +173,8 @@ function gameOver(combo, playerWhoWon){
 	}else{
 		winsPlayerTwo++;
 	}
-	document.getElementById('play-again-button').disabled = false;
-	document.getElementById('play-again').style.display = 'block';
+	$('#play-again-button').disabled = false;
+	$('#play-again').css('display', 'block');
 }
 
 function resetGame(){
@@ -162,23 +182,21 @@ function resetGame(){
 	playerOneMarkings = [];
 	playerTwoMarkings = [];
 	
-	var buttons = document.getElementsByClassName("square");
-	// Clear innerHTML of squares
-	for(i=0; i<buttons.length; i++){
-		buttons[i].innerHTML = '' ;
-		buttons[i].classList.add('empty');
-		buttons[i].classList.remove('winner');
-	}
+	$(".square").each(function(){
+		$(this).html('');
+		$(this).addClass('empty');
+		$(this).removeClass('winner');
+	})
 	//Enable the one and two player buttons
-	document.getElementById('one-player').disabled = false;
-	document.getElementById('two-players').disabled = false;	
+	$('#one-player').removeAttr('disabled');
+	$('#two-players').removeAttr('disabled');
 	//hide the play again button
-	document.getElementById('play-again').style.display = 'none';
+	$('#play-again').css('display','none');
 }
 
-var squareWidth = document.getElementById('a1').clientWidth;
-var squares = document.getElementsByClassName('square');
-for(i=0; i<squares.length; i++){
-	squares[i].style.height = squareWidth + 'px';
-}
+var squareWidth = $('#a1').width();
+$('.square').each(function(){
+	$(this).css('height', squareWidth + 'px')
+})
+
 

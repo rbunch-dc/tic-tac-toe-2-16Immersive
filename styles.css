@@ -43,6 +43,10 @@
 	width: 200px;
 }
 
+.blink.square{
+    font-size: 120px;
+}
+
 
 .square{
 	display: inline-block;
@@ -53,7 +57,9 @@
 	font-size: 80px;
 	float: left;
 	border: none;
+	transition: all .2s;
 }
+
 
 .left{
 	margin-left: 0px;
