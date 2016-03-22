@@ -5,17 +5,46 @@
 //ULTRA BONUS
 // Make the computer try and win.
 
-var winners = 
-[
-	['a1','a2','a3'],
-	['b1','b2','b3'],
-	['c1','c2','c3'],
-	['a1','b1','c1'],
-	['a2','b2','c2'],
-	['a3','b3','c3'],
-	['a1','b2','c3'],
-	['c1','b2','a3']
-];
+var alph = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+var winners = [];
+
+gridSize = 5;
+for(i=0;i<=gridSize; i++){
+	winnersInside = [];
+	for(j=0;j<=gridSize; j++){
+		winnersInside.push(alph[j]+i);
+	}
+
+	// what does winnersInside look like at i=0 here
+	// winnersInside = [a0,b0,c0,d0,e0];
+	// winnersInside = [a1,b1,c1,d1,e1];
+	// winnersInside = [a2,b2,c2,d2,e2];
+
+
+	winners.push(winnersInside);
+
+	// winners = [
+	// 	[a0,b0,c0,d0,e0],
+	// 	[a1,b1,c1,d1,e1],
+	// 	[a2,b2,c2,d2,e2]
+
+	// ]
+
+}
+
+htmlToAppend = '';
+for(i=0; i<winners.length; i++){
+	htmlToAppend += '<div class="row row'+i+'">';
+	for(j=0;j<=gridSize; j++){
+		htmlToAppend += '<button disabled class="left square empty" id="'+winners[i][j]+'"></button>';
+	}
+	htmlToAppend += '</div>';
+}
+
+$('#board-wrapper').html(htmlToAppend);
+
+console.log(winners)
+
 
 // var winners = [];
 // var gridSize = 5;
@@ -61,7 +90,12 @@ $('.square').click(function(){
 })
 
 function addSymbol(element){
-	// $(element).html('X');
+	element.innerHTML = 'X'
+	
+	// $(element).html('') // Overwrites the HTML with empty string
+	// $(element).html() //returns current value
+
+
 	if($(element).html() == ''){
 		//Put a symbol in... X or O?
 		if(whosTurn == 1){
@@ -93,7 +127,7 @@ function addSymbol(element){
 		}
 	}else{
 		$(gameHeader).html("This box is taken");
-		$(gameHeader).addClass = 'red';
+		$(gameHeader).addClass('red');
 	}
 	checkWin();
 }
@@ -188,8 +222,7 @@ function resetGame(){
 		$(this).removeClass('winner');
 	})
 	//Enable the one and two player buttons
-	$('#one-player').removeAttr('disabled');
-	$('#two-players').removeAttr('disabled');
+	$('#one-player, #two-players').removeAttr('disabled');
 	//hide the play again button
 	$('#play-again').css('display','none');
 }
@@ -198,5 +231,8 @@ var squareWidth = $('#a1').width();
 $('.square').each(function(){
 	$(this).css('height', squareWidth + 'px')
 })
+
+
+
 
 

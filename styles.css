@@ -11,7 +11,7 @@
 	overflow: hidden;
 }
 
-#row1, #row2, #row3{
+.row{
     overflow: hidden;
     margin-bottom: 5%;
 }
@@ -50,7 +50,7 @@
 
 .square{
 	display: inline-block;
-	width: 30%;
+	width: 10%;
 	background: white;
 	margin-left: 5%;
 	padding: 30px 0;
